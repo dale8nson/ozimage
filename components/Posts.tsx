@@ -1,43 +1,50 @@
 'use client'
-import { use } from "react"
+import { Suspense, use, useMemo } from "react"
 import { Card } from "./Card"
-import { Html } from "./Html"
 import parse from 'html-react-parser'
-import Script from 'next/script'
+import Image from "next/image"
+import { useAppSelector, useAppDispatch } from "@/lib/hooks"
+import { setPosts, setCoords } from "@/lib/features/root/rootSlice"
 
-export const Posts = ({ posts: ps, categories : cats, className }: { posts: Promise<[]>, categories: Promise<[]>, className: string }) => {
 
-  // console.log(ps)
+export const Posts = ({ posts: ps, className }: { posts:Promise<Post[]>, className: string }) => {
+  const dispatch = useAppDispatch()
 
   const posts = use(ps)
-  const categories = use(cats)
-  console.log(categories)
+  dispatch(setPosts(posts))
+
+  const coords: {[id:number]: Coords[]} = {}
+  for (const post of posts) {
+    coords[post.id] = post.coords
+  }
+  dispatch(setCoords(coords))
+
+  // console.log(`posts[0]: `, posts[0])
+
+  const cards = useMemo(() => {
+
+    return posts.map(post => {
+        
+        // console.log(`img: ${img}`)
+        const postCategories = Object.keys(post.categories)
+  
+        const img = <Image src={`data:image/*;base64,${post.image}`} width="500" height="500" alt=""/>
+
+        return (
+        // <Suspense key={crypto.randomUUID()}>
+          <Card key={crypto.randomUUID()} postId={post.id} title={parse(post.title)} img={img} excerpt={parse(post.excerpt)} categories={postCategories} />
+          // </Suspense>)
+        // }
+    )})
+  }, [posts])
+
   // console.log(`posts: ${Object.values(posts).map(post => Object.entries(post).map(([k, v]) => `${k}: ${v}\n`).join('\n'))}`)
   // console.log(posts[0].content.rendered)
   // console.log(`posts: ${Object.values(posts).map(post => `${post.title}: ${post.tags.join(', ')}`)}`)
 
   return (
-    <div className={`grid grid-cols-1 justify-around w-1/5 h-full gap-16 overflow-x-visible overflow-y-scroll p-24 ${className}`}>
-      {posts.map(post => {
-        const img = post.content.rendered.match(/<img.*?\/?>/)?.[0]
-        if(!img) console.log(post.content.rendered)
-        console.log(`img: ${img}`)
-        const postCategories = post.categories.map(id => categories?.find(cat => cat.id === id)?.name)
-
-        return (<Card key={crypto.randomUUID()} title={parse(post.title.rendered)} img={img && parse(img)} excerpt={parse(post.excerpt.rendered)} categories={postCategories} />)
-        })}
+    <div className={`grid grid-cols-1 justify-around w-1/5 h-full gap-16 overflow-x-visible scroll-m-0 overflow-y-scroll p-24 ${className}`}>
+      {cards}
     </div>
-    // <div className="flex justify-center items-start w-full h-full m-0 p-8 overflow-hidden">
-    //   {/* <div className="flex-col w-full h-full p-8 m-0 items-center">{Object.values(posts).map(post => (
-    //     <Html key={crypto.randomUUID()} >
-    //       {post.content.rendered}
-    //     </Html>
-    //   ))}</div> */}
-    //   <div className="flex-col w-full h-full p-8 m-0 items-center overflow-y-scroll">
-    //     {/* <Html> */}
-
-    //     {/* </Html> */}
-    //   </div>
-    // </div>
   )
 }
