@@ -1,25 +1,25 @@
-'use client'
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import "./globals.css";
 import {
     QueryClient,
     QueryClientProvider,
   } from '@tanstack/react-query'
   
-  const queryClient = new QueryClient()
+  // const queryClient = new QueryClient()
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <QueryClientProvider client={queryClient}>
-    <html lang="en">
-      <body className="flex flex-row justify-center items-center w-screen h-screen bg-black m-0">
-        {children}
-      </body>
-    </html>
-    </QueryClientProvider>
+    // <Suspense>
+      <html lang="en" className="overflow-hidden">
+        <body className="flex flex-col justify-start items-start w-screen h-screen bg-white m-0">
+          {children}
+        </body>
+      </html>
+    // </Suspense>
   );
 }

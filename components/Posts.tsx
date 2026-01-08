@@ -1,50 +1,58 @@
 'use client'
-import { Suspense, use, useMemo } from "react"
+import { Suspense, use, useEffect, useMemo, useId } from "react"
 import { Card } from "./Card"
-import parse from 'html-react-parser'
+import parse, { domToReact } from 'html-react-parser'
 import Image from "next/image"
 import { useAppSelector, useAppDispatch } from "@/lib/hooks"
 import { setPosts, setCoords } from "@/lib/features/root/rootSlice"
+import { Loader } from "@react-three/drei"
 
 
-export const Posts = ({ posts: ps, className }: { posts:Promise<Post[]>, className: string }) => {
+export const Posts = ({ posts: ps, serverUrl, className }: { posts: Promise<Post[]>, serverUrl: string, className: string }) => {
   const dispatch = useAppDispatch()
 
-  const posts = use(ps)
-  dispatch(setPosts(posts))
+  // fetch("http://localhost:8080/posts/coords").then(res => res.json()).then(coords => dispatch(setCoords(coords)))
+  // const coords = use(json)
+  // dispatch(setCoords(coords))
+  
+  const posts = use(ps) as Post[]
+  console.log("posts: ", posts)
+  // dispatch(setPosts(posts))
 
-  const coords: {[id:number]: Coords[]} = {}
-  for (const post of posts) {
-    coords[post.id] = post.coords
-  }
-  dispatch(setCoords(coords))
+  // const coords: {[id:number]: Coords[]} = {}
+  // for (const post of posts) {
+  //   coords[post.id] = post.coords
+  // }
+  // dispatch(setCoords(coords))
 
   // console.log(`posts[0]: `, posts[0])
 
-  const cards = useMemo(() => {
-
-    return posts.map(post => {
+  // const cards = useMemo(() => { 
         
-        // console.log(`img: ${img}`)
-        const postCategories = Object.keys(post.categories)
-  
-        const img = <Image src={`data:image/*;base64,${post.image}`} width="500" height="500" alt=""/>
-
-        return (
-        // <Suspense key={crypto.randomUUID()}>
-          <Card key={crypto.randomUUID()} postId={post.id} title={parse(post.title)} img={img} excerpt={parse(post.excerpt)} categories={postCategories} />
-          // </Suspense>)
-        // }
-    )})
-  }, [posts])
+  // )}, [postids])
 
   // console.log(`posts: ${Object.values(posts).map(post => Object.entries(post).map(([k, v]) => `${k}: ${v}\n`).join('\n'))}`)
   // console.log(posts[0].content.rendered)
   // console.log(`posts: ${Object.values(posts).map(post => `${post.title}: ${post.tags.join(', ')}`)}`)
 
+  // const key = useId()
+
   return (
-    <div className={`grid grid-cols-1 justify-around w-1/5 h-full gap-16 overflow-x-visible scroll-m-0 overflow-y-scroll p-24 ${className}`}>
-      {cards}
+    <div className={`grid justify-center grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-x-1.5 md:max-w-370 pt-24 md:px-2 ${className}`}>
+      {posts && posts.map((post: Post) => {
+        // const cardProps = fetch(`${serverUrl}/post/data/${id}`).then(res => res.json())
+        
+        return (
+        <Suspense key={post.id} fallback={<div className="relative hover:scale-150 transition-all hover:shadow-lg hover:shadow-black/70 bg-white/25 border-2 rounded-lg border-white/25 duration-350 aspect-16/10 flex w-full h-full justify-center items-center animate-pulse text-2xl text-white/25"
+        ><h1>Loading...</h1></div>}>
+          <Card 
+          key={post.id}
+          post={post}
+          />
+        </Suspense>
+        
+      )})
+    }
     </div>
   )
 }
