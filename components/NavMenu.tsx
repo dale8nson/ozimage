@@ -16,7 +16,7 @@ import {
 import Link from "next/link"
 
 export const NavMenu = ({menuItems}:{menuItems: MenuItem[]}) => {
-// $1("menuItems: ", menuItems)
+// console.log("menuItems: ", menuItems)
   const [activeItem, setActiveItem] = useState<string>("home")
 
   return (

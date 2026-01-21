@@ -143,7 +143,7 @@ function parseHtml(cont: string, tagTable?: string[], iterator?: Iterator<string
 
   function parse() {
     for (let c = iter.next(); c !== null; c = iter.next()) {
-      // if (isSelfClosing) // $1(`self-closing c: ${c}`)
+      // if (isSelfClosing) // console.log(`self-closing c: ${c}`)
       isSelfClosing = false
       // console.log(`c: ${c}`)
       switch (c) {
@@ -310,7 +310,7 @@ function parseHtml(cont: string, tagTable?: string[], iterator?: Iterator<string
           // console.log(`^< dt after: `, dt)
           continue
         default:
-          // $1(`default case for '${c}'`)
+          // console.log(`default case for '${c}'`)
           break
       }
     }
@@ -332,8 +332,8 @@ const createNode = (tree: DomTree): ReactElement[] => {
       if (attrs) attrs["key"] = crypto.randomUUID()
       els.push(createElement(tag, attrs, typeof content === 'string' ? content : tag === 'img' ? undefined : createNode(content as DomTree)))
     } catch (e) {
-      // $1(node)
-      // $1(e)
+      // console.log(node)
+      // console.log(e)
       // throw e
 
     }
@@ -345,8 +345,8 @@ const createNode = (tree: DomTree): ReactElement[] => {
 export const Html = ({ children }: { children: string }) => {
   const tree = parseHtml(children)
   
-  // $1(formatWithOptions({depth: Infinity, colors: true}, tree))
-  //  // $1(tree2string(tree))
+  // console.log(formatWithOptions({depth: Infinity, colors: true}, tree))
+  //  // console.log(tree2string(tree))
   const nodes = createNode(tree)
 
   return nodes

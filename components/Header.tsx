@@ -5,7 +5,7 @@ import NextImage from 'next/image'
 export const Header = async () => {
 
   const menuItems = await fetch(`${process.env.SERVER_URL}/menu/items`).then(res => res.json())
-  // $1("menuItems: ", menuItems)
+  // console.log("menuItems: ", menuItems)
 
   return (
     <header className="relative z-50 rounded-b-2xl shadow-2xl flex items-center justify-center h-fit w-full space-y-2 pb-0  backdrop-blur-md  ">

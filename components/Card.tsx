@@ -41,7 +41,7 @@ export const Card = ({
   // console.log(`cardProps: `, use(cardProps))
   // const post = use(cardProps)
 
-  // $1(`continent: `, continent)
+  // console.log(`continent: `, continent)
   // useGSAP(() => {
   //   gsap.to(`.card`, {keyframes: {y:[1000, 0] }, duration: 2.5, ease:"power1.in"})
   // }, [])
