@@ -19,6 +19,6 @@ export const getCoords = async () => {
 
 }
 
-const lastUpdate = async (): boolean => {
+// const lastUpdate = async (): Promise<boolean> => {
 
-}
+// }
