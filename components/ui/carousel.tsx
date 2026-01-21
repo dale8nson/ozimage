@@ -283,10 +283,14 @@ function CarouselContent({
   }, [itemsLength, setItemsCount]);
 
   useEffect(() => {
-    const move = () => setIndex((index + 1) % itemsLength)
-    const id = setTimeout(move, 3000)
+    if (itemsLength < 2) {
+      return
+    }
+    const id = setTimeout(() => {
+      setIndex((index + 1) % itemsLength)
+    }, 3000)
     return () => clearTimeout(id)
-  }, [index])
+  }, [index, itemsLength, setIndex])
 
   const onDragEnd = () => {
     const x = dragX.get();

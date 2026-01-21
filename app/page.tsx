@@ -16,28 +16,7 @@ import { Footer } from "@/components/Footer";
 const serverUrl = process.env.SERVER_URL ?? ""
 const POSTS_PER_PAGE = 24
 
-async function fetchPostsPage(serverUrl: string, page: number) {
-  if (!serverUrl) {
-    return [] as Post[]
-  }
-  const res = await fetch(`${serverUrl}/posts?page=${page}&per_page=${POSTS_PER_PAGE}`)
-  if (!res.ok) {
-    throw new Error(`Failed to fetch posts page ${page}`)
-  }
-  return res.json() as Promise<Post[]>
-}
-
-
 export default async function Home() {
-
-  const coords = fetch(`${process.env.SERVER_URL}/coords`).then(res => res.json())
-  const posts = fetchPostsPage(serverUrl, 1)
-  // console.log("posts: ", posts)
-
-  const res = await fetch(`${serverUrl}/posts/featured`);
-  // console.log(`res: `, res)
-  const featured_posts = res.json();
-
   // const coords = fetch("api/coords").then(res => res.json())
   // console.log(`api/coords`, coords)
   // const apiToken = token()
@@ -50,11 +29,11 @@ export default async function Home() {
         <main className="relative flex-col items-start justify-start space-y-16 w-full h-full overflow-x-clip overflow-y-scroll mx-auto">
           <div className="relative flex w-full h-auto max-w-370 justify-center items-start mx-auto">
             <Suspense fallback={<div className="border-2 border-gray-500 relative flex-col justify-start items-center bg-transparent rounded-2xl w-screen h-screen max-h-[66vh]  max-w-370 m-auto overflow-clip text-black animate-pulse "><p>Loading...</p></div>}>
-              <Carousel posts={featured_posts} server_url={serverUrl} />
+              <Carousel server_url={serverUrl} />
             </Suspense>
           </div>
           <Suspense fallback={<div className="relative max-w-370 mx-auto h-auto w-full text-5xl flex-col justify-start items-center text-black animate-pulse "><p>Loading...</p></div>}>
-            <Posts posts={posts} postsPerPage={POSTS_PER_PAGE} serverUrl={serverUrl} className="relative max-w-370 m-auto h-auto w-full z-30 overflow-y-clip" />
+            <Posts postsPerPage={POSTS_PER_PAGE} serverUrl={serverUrl} className="relative max-w-370 m-auto h-auto w-full z-30 overflow-y-clip" />
           </Suspense>
 
           {/* <Suspense fallback={<div className="flex justify-center items-center w-full h-full animate-pulse"><p className="text-2xl ">Loading...</p></div>}>

@@ -1,26 +1,66 @@
 'use client'
-import { use, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { Card } from "./Card"
 
 type PostsProps = {
-  posts: Promise<Post[]>
   serverUrl: string
   className: string
   postsPerPage?: number
 }
 
-export const Posts = ({ posts: ps, serverUrl, className, postsPerPage = 24 }: PostsProps) => {
-  const initialPosts = use(ps) as Post[]
-  const [posts, setPosts] = useState<Post[]>(initialPosts)
+export const Posts = ({ serverUrl, className, postsPerPage = 24 }: PostsProps) => {
+  const [posts, setPosts] = useState<Post[]>([])
   const [page, setPage] = useState(1)
-  const [hasMore, setHasMore] = useState(initialPosts.length === postsPerPage)
+  const [hasMore, setHasMore] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [isInitialLoading, setIsInitialLoading] = useState(true)
+  const [loadError, setLoadError] = useState<string | null>(null)
 
   useEffect(() => {
-    setPosts(initialPosts)
-    setPage(1)
-    setHasMore(initialPosts.length === postsPerPage)
-  }, [initialPosts, postsPerPage])
+    let isCancelled = false
+
+    const loadInitialPosts = async () => {
+      setIsInitialLoading(true)
+      setLoadError(null)
+      setPosts([])
+      setPage(1)
+      setHasMore(false)
+
+      if (!serverUrl) {
+        setIsInitialLoading(false)
+        return
+      }
+
+      try {
+        const res = await fetch(`${serverUrl}/posts?page=1&per_page=${postsPerPage}`)
+        if (!res.ok) {
+          throw new Error(`Failed to fetch posts page 1`)
+        }
+        const nextPosts = (await res.json()) as Post[]
+        if (isCancelled) {
+          return
+        }
+        setPosts(nextPosts)
+        setHasMore(nextPosts.length === postsPerPage)
+      } catch (error) {
+        if (isCancelled) {
+          return
+        }
+        console.error(error)
+        setLoadError("Failed to load posts.")
+      } finally {
+        if (!isCancelled) {
+          setIsInitialLoading(false)
+        }
+      }
+    }
+
+    loadInitialPosts()
+
+    return () => {
+      isCancelled = true
+    }
+  }, [serverUrl, postsPerPage])
 
   const loadMore = async () => {
     if (isLoading || !hasMore) {
@@ -51,6 +91,16 @@ export const Posts = ({ posts: ps, serverUrl, className, postsPerPage = 24 }: Po
 
   return (
     <div className={`grid justify-center items-start grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-x-1.5 gap-y-1.5  h-full w-full md:px-2 pb-8 ${className}`}>
+      {isInitialLoading && posts.length === 0 && (
+        <div className="col-span-full flex justify-center py-10 text-black/60 animate-pulse">
+          Loading...
+        </div>
+      )}
+      {loadError && (
+        <div className="col-span-full flex justify-center py-10 text-black/60">
+          {loadError}
+        </div>
+      )}
       {posts.map((post: Post) => (
         <Card
           key={post.id}
