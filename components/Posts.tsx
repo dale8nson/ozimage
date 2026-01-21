@@ -1,58 +1,74 @@
 'use client'
-import { Suspense, use, useEffect, useMemo, useId } from "react"
+import { use, useEffect, useState } from "react"
 import { Card } from "./Card"
-import parse, { domToReact } from 'html-react-parser'
-import Image from "next/image"
-import { useAppSelector, useAppDispatch } from "@/lib/hooks"
-import { setPosts, setCoords } from "@/lib/features/root/rootSlice"
-import { Loader } from "@react-three/drei"
 
+type PostsProps = {
+  posts: Promise<Post[]>
+  serverUrl: string
+  className: string
+  postsPerPage?: number
+}
 
-export const Posts = ({ posts: ps, serverUrl, className }: { posts: Promise<Post[]>, serverUrl: string, className: string }) => {
-  const dispatch = useAppDispatch()
+export const Posts = ({ posts: ps, serverUrl, className, postsPerPage = 24 }: PostsProps) => {
+  const initialPosts = use(ps) as Post[]
+  const [posts, setPosts] = useState<Post[]>(initialPosts)
+  const [page, setPage] = useState(1)
+  const [hasMore, setHasMore] = useState(initialPosts.length === postsPerPage)
+  const [isLoading, setIsLoading] = useState(false)
 
-  // fetch("http://localhost:8080/posts/coords").then(res => res.json()).then(coords => dispatch(setCoords(coords)))
-  // const coords = use(json)
-  // dispatch(setCoords(coords))
-  
-  const posts = use(ps) as Post[]
-  console.log(`posts: ${posts}`, )
-  // dispatch(setPosts(posts))
+  useEffect(() => {
+    setPosts(initialPosts)
+    setPage(1)
+    setHasMore(initialPosts.length === postsPerPage)
+  }, [initialPosts, postsPerPage])
 
-  // const coords: {[id:number]: Coords[]} = {}
-  // for (const post of posts) {
-  //   coords[post.id] = post.coords
-  // }
-  // dispatch(setCoords(coords))
+  const loadMore = async () => {
+    if (isLoading || !hasMore) {
+      return
+    }
+    if (!serverUrl) {
+      setHasMore(false)
+      return
+    }
 
-  // console.log(`posts[0]: `, posts[0])
-
-  // const cards = useMemo(() => { 
-        
-  // )}, [postids])
-
-  // console.log(`posts: ${Object.values(posts).map(post => Object.entries(post).map(([k, v]) => `${k}: ${v}\n`).join('\n'))}`)
-  // console.log(posts[0].content.rendered)
-  // console.log(`posts: ${Object.values(posts).map(post => `${post.title}: ${post.tags.join(', ')}`)}`)
-
-  // const key = useId()
+    const nextPage = page + 1
+    setIsLoading(true)
+    try {
+      const res = await fetch(`${serverUrl}/posts?page=${nextPage}&per_page=${postsPerPage}`)
+      if (!res.ok) {
+        throw new Error(`Failed to fetch posts page ${nextPage}`)
+      }
+      const nextPosts = (await res.json()) as Post[]
+      setPosts((prev) => [...prev, ...nextPosts])
+      setPage(nextPage)
+      setHasMore(nextPosts.length === postsPerPage)
+    } catch (error) {
+      console.error(error)
+    } finally {
+      setIsLoading(false)
+    }
+  }
 
   return (
     <div className={`grid justify-center items-start grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-x-1.5 gap-y-1.5  h-full w-full md:px-2 pb-8 ${className}`}>
-      {posts && posts.map((post: Post) => {
-        // const cardProps = fetch(`${serverUrl}/post/data/${id}`).then(res => res.json())
-        console.log(`continent: ${post.continent} ${post.slug}`)
-        return (
-        // <Suspense key={post.id} fallback={<div className="relative hover:scale-150 transition-all hover:shadow-lg hover:shadow-black/70 bg-white/25 border-2 rounded-lg border-white/25 duration-350 aspect-16/10 flex w-full h-full justify-center items-center animate-pulse text-2xl text-white/25"
-        // ><h1>Loading...</h1></div>}>
-          <Card 
+      {posts.map((post: Post) => (
+        <Card
           key={post.id}
           post={post}
-          />
-        // </Suspense>
-        
-      )})
-    }
+        />
+      ))}
+      {hasMore && (
+        <div className="col-span-full flex justify-center py-6">
+          <button
+            type="button"
+            className="rounded-full border border-black/20 bg-white/70 px-6 py-2 text-sm font-semibold text-black/80 transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-60"
+            onClick={loadMore}
+            disabled={isLoading}
+          >
+            {isLoading ? "Loading..." : "Load more"}
+          </button>
+        </div>
+      )}
     </div>
   )
 }

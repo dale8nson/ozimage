@@ -17,6 +17,9 @@ const serverUrl = process.env.SERVER_URL ?? ""
 const POSTS_PER_PAGE = 24
 
 async function fetchPostsPage(serverUrl: string, page: number) {
+  if (!serverUrl) {
+    return [] as Post[]
+  }
   const res = await fetch(`${serverUrl}/posts?page=${page}&per_page=${POSTS_PER_PAGE}`)
   if (!res.ok) {
     throw new Error(`Failed to fetch posts page ${page}`)
@@ -24,32 +27,11 @@ async function fetchPostsPage(serverUrl: string, page: number) {
   return res.json() as Promise<Post[]>
 }
 
-async function fetchAllPosts(serverUrl: string) {
-  if (!serverUrl) {
-    return [] as Post[]
-  }
-
-  const posts: Post[] = []
-  let page = 1
-  while (true) {
-    const pagePosts = await fetchPostsPage(serverUrl, page)
-    if (pagePosts.length === 0) {
-      break
-    }
-    posts.push(...pagePosts)
-    if (pagePosts.length < POSTS_PER_PAGE) {
-      break
-    }
-    page += 1
-  }
-  return posts
-}
-
 
 export default async function Home() {
 
   const coords = fetch(`${process.env.SERVER_URL}/coords`).then(res => { console.log(`res: `, res); return res.json() })
-  const posts = fetchAllPosts(serverUrl)
+  const posts = fetchPostsPage(serverUrl, 1)
   console.log("posts: ", posts)
 
   const res = await fetch(`${serverUrl}/posts/featured`);
@@ -72,7 +54,7 @@ export default async function Home() {
             </Suspense>
           </div>
           <Suspense fallback={<div className="relative max-w-370 mx-auto h-auto w-full text-5xl flex-col justify-start items-center text-black animate-pulse "><p>Loading...</p></div>}>
-            <Posts posts={posts} serverUrl={serverUrl} className="relative max-w-370 m-auto h-auto w-full z-30 overflow-y-clip" />
+            <Posts posts={posts} postsPerPage={POSTS_PER_PAGE} serverUrl={serverUrl} className="relative max-w-370 m-auto h-auto w-full z-30 overflow-y-clip" />
           </Suspense>
 
           {/* <Suspense fallback={<div className="flex justify-center items-center w-full h-full animate-pulse"><p className="text-2xl ">Loading...</p></div>}>
