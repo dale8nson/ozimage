@@ -44,3 +44,4 @@ data/**/*
 *.tif
 Globe.tsx
 app/~*/
+app/v2/
