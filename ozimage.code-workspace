@@ -1,0 +1,28 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../places-ai"
+		},
+		{
+			"path": "../ozimage-actix"
+		},
+		{
+			"path": "../../.cargo"
+		},
+		{
+			"path": "../wp-dev"
+		},
+		{
+			"path": "../tp5d"
+		},
+		{
+			"path": "../rembg-rs"
+		}
+	],
+	"settings": {
+		"FSharp.suggestGitignore": false
+	}
+}

@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		},
+		{
+			"path": "../../places-ai"
+		},
+		{
+			"path": "../../ozimage-actix"
+		},
+		{
+			"path": "../../../.cargo"
+		}
+	],
+	"settings": {}
+}
