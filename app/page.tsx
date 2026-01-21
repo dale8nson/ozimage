@@ -30,7 +30,7 @@ async function fetchPostsPage(serverUrl: string, page: number) {
 
 export default async function Home() {
 
-  const coords = fetch(`${process.env.SERVER_URL}/coords`).then(res => { // console.log(`res: `, res); return res.json() })
+  const coords = fetch(`${process.env.SERVER_URL}/coords`).then(res => res.json())
   const posts = fetchPostsPage(serverUrl, 1)
   // console.log("posts: ", posts)
 
