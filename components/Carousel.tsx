@@ -23,17 +23,17 @@ export const Carousel = ({ posts: ps, server_url }: { posts: Promise<Post[]>, se
         <div className="relative flex-col w-full h-full space-y-2 overflow-clip">
           <CarouselContent className="flex justify-start items-start relative w-full max-h-208  [**:object-cover]">
             {posts && posts.map((post: Post, i) => {
-              console.log(`index: ${i}  alt: ${post.image.alt}`)
-              console.log(`post.fg: ${post.fg.slice(0, 150)}`)
+              // $1(`index: ${i}  alt: ${post.image.alt}`)
+              // $1(`post.fg: ${post.fg.slice(0, 150)}`)
 
-              console.log(`server_url: ${server_url}`)
+              // $1(`server_url: ${server_url}`)
               // const tp5d = fetch(`${server_url}/tp5d/${post.image.id}`).then(res => res.json()) as Promise<{id: number, fg: string, bg: string}>
               return (
                 <CarouselItem className="relative flex justify-center items-start w-full max-w-370 h-auto max-h-208" key={i}>
                   <Link href={post.link} className='block relative flex-col w-full max-h-208'>
                       {/* <Suspense> */}
                         <Image width={post.image.width} height={post.image.height} alt={post.image.alt} src={post.image.b64}
-                          className='w-full h-full max-h-208 max-w-370 object-cover' />
+                          className='w-full h-[44vh] grow max-h-184 max-w-370 object-cover' />
                       {/* </Suspense> */}
                     <div className='absolute flex-col w-full items-start bottom-0 p-4 text-white text-2xl sm:text-3xl  md:text-5xl'>
                       <div className="bg-white text-black text-base w-fit font-bold px-2">

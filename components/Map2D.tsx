@@ -163,11 +163,11 @@ export const Map2D = () => {
     } 
 
     if (Number.isNaN(lat) || Number.isNaN(lon)) return
-    console.log(`lat: ${lat}  lon: ${lon}`)
+    // $1(`lat: ${lat}  lon: ${lon}`)
     
     const light = scene.getObjectByName("sunshine")
     if (!light) return
-    console.log("camera: ", camera)
+    // $1("camera: ", camera)
 
     const [prevLon, prevLat, prevZ] = camPreviousPosition.current
     const plon = prevLon
@@ -191,7 +191,7 @@ export const Map2D = () => {
   }, [lat, lon])
 
   useGSAP(() => {
-    console.log(`cameraDistance: ${cameraDistance}`)
+    // $1(`cameraDistance: ${cameraDistance}`)
     tl.to(camPosition.current, { z: cameraDistance, duration: cameraDistance / 25 * 2, ease: 'power1.inOut', onUpdate: moveCam })
   }, [cameraDistance])
 
@@ -226,7 +226,7 @@ export const Map2D = () => {
   //         const sinT = Math.sin(theta)
   //         const deltaY = bb.min.y + height / 2
   //         const deltaX = bb.min.x
-  //         console.log(`geometry: `, geometry)
+  //         // $1(`geometry: `, geometry)
   //         geometry.applyMatrix4(new Matrix4(
   //           // 1,    0,     0, 0,
   //           cosT, sinT,  0, cosT + deltaX * sinT - deltaX,

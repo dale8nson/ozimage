@@ -214,7 +214,7 @@ function CarouselIndicator({
         {images.map((img, i) => (
           <div key={i}  className="max-w-[211px] max-h-[151px] overflow-clip  cursor-pointer">
             {img && <NextImage
-              onClick={() => {console.log(`index: ${i} alt: ${img.alt}`);setIndex(i)}}
+              onClick={() => {// $1(`index: ${i} alt: ${img.alt}`);setIndex(i)}}
               src={img.b64}
               alt={img.alt}
               // loading='lazy'
@@ -264,7 +264,7 @@ function CarouselContent({
       const visibleCount = entries.filter(
         (entry) => entry.isIntersecting
       ).length;
-      console.log(`visibleCount: ${visibleCount}`)
+      // $1(`visibleCount: ${visibleCount}`)
       setVisibleItemsCount(visibleCount);
     }, options);
 

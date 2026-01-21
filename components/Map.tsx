@@ -75,7 +75,7 @@ export const Map = () => {
     // const {x, y, width: w, height: h} = ref.current.getBoundingClientRect()
     // let [x1, y1, x2, y2] =  [x, y, x + w, y + h]
 
-    console.log(`deltaY: ${e.deltaY}`)
+    // $1(`deltaY: ${e.deltaY}`)
 
     const [lat, lon] = mapCoords.current
 

@@ -18,3 +18,7 @@ export const getCoords = async () => {
   return coords
 
 }
+
+const lastUpdate = async (): boolean => {
+
+}
