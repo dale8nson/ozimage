@@ -214,7 +214,7 @@ function CarouselIndicator({
         {images.map((img, i) => (
           <div key={i}  className="max-w-[211px] max-h-[151px] overflow-clip  cursor-pointer">
             {img && <NextImage
-              onClick={() => {// $1(`index: ${i} alt: ${img.alt}`);setIndex(i)}}
+              onClick={() => {setIndex(i)}}
               src={img.b64}
               alt={img.alt}
               // loading='lazy'
