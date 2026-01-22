@@ -52,9 +52,9 @@ return (
 <Root
   id={id}
   ref={rootRef} 
-  className="card h-fit  p-0 relative rounded-2xl hover:z-30 w-full md:h-fit max-h-82.25 max-w-92.5 flex-col items-center justify-start duration-350 transition-all mx-auto md:pb-8 bg-[#004071]/40 object-cover overflow-clip">
-    <CardContent className="flex-col h-full w-full md:h-[248.45px] justify-start rounded-t-2xl saturate-125 contrast-125">
-      { image.b64 !== "" && <div className="h-full w-full md:h-[248.45px] "><Link href={link} prefetch><NextImage src={image.b64} width={image.width} height={image.height} alt={image.alt} className="h-min min-w-full md:h-[248.45px] rounded-t-2xl object-cover flex justify-center" objectFit="cover" /></Link></div>}
+  className="card h-fit w-full mx-0 p-0 relative rounded-2xl hover:z-30 md:h-fit md:max-h-82.25 md:max-w-92.5 flex-col items-center justify-start duration-350 transition-all md:mx-auto md:pb-8 bg-[#004071]/40 object-cover overflow-clip">
+    <CardContent className="flex-col h-auto w-screen md:w-full md:h-[248.45px] justify-start rounded-t-2xl saturate-125 contrast-125">
+      { image.b64 !== "" && <div className="h-full w-screen md:w-full md:h-[248.45px] "><Link href={link} prefetch><NextImage src={image.b64} width={image.width} height={image.height} alt={image.alt} className="h-min min-w-full md:h-[248.45px] rounded-t-2xl object-cover flex justify-center"  /></Link></div>}
     </CardContent>
     <CardFooter className="absolute bottom-0 my-2 md:my-0 md:relative md:translate-y-0 flex-col self-start items-start justify-start h-fit pl-2 md:pl-4">
       <p className="text-white md:text-black italic">{continent}</p>
