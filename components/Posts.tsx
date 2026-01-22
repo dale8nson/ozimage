@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, useState } from "react"
 import { Card } from "./Card"
+import { PostsSkeleton } from "./PostsSkeleton"
 
 type PostsProps = {
   serverUrl: string
@@ -15,7 +16,7 @@ export const Posts = ({ serverUrl, className, postsPerPage = 24 }: PostsProps) =
   const [isLoading, setIsLoading] = useState(false)
   const [isInitialLoading, setIsInitialLoading] = useState(true)
   const [loadError, setLoadError] = useState<string | null>(null)
-
+  
   useEffect(() => {
     let isCancelled = false
 
@@ -62,13 +63,15 @@ export const Posts = ({ serverUrl, className, postsPerPage = 24 }: PostsProps) =
     }
   }, [serverUrl, postsPerPage])
 
+  // return <PostsSkeleton/>
+
   const loadMore = async () => {
     if (isLoading || !hasMore) {
       return
     }
     if (!serverUrl) {
       setHasMore(false)
-      return
+      return <PostsSkeleton/>
     }
 
     const nextPage = page + 1
@@ -89,13 +92,9 @@ export const Posts = ({ serverUrl, className, postsPerPage = 24 }: PostsProps) =
     }
   }
 
-  return (
-    <div className={`grid justify-center items-start grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-x-1.5 gap-y-1.5  h-full w-full md:px-2 pb-8 ${className}`}>
-      {isInitialLoading && posts.length === 0 && (
-        <div className="col-span-full flex justify-center py-10 text-black/60 animate-pulse">
-          Loading...
-        </div>
-      )}
+  return isInitialLoading ? <PostsSkeleton /> : (
+
+    <div className={`grid justify-center max-w-370 items-start grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-x-1.5 gap-y-1.5 h-fit w-full py-8 m-auto ${className}`}>
       {loadError && (
         <div className="col-span-full flex justify-center py-10 text-black/60">
           {loadError}

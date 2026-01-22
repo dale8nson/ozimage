@@ -11,6 +11,7 @@ import {
   CarouselItem,
 } from '@/components/ui/carousel';
 import Link from 'next/link';
+import { CarouselSkeleton } from './CarouselSkeleton';
 
 export const Carousel = ({ server_url }: { server_url: string }) => {
   const [posts, setPosts] = useState<Post[]>([])
@@ -27,7 +28,7 @@ export const Carousel = ({ server_url }: { server_url: string }) => {
 
       if (!server_url) {
         setIsLoading(false)
-        return
+        return <CarouselSkeleton />
       }
 
       try {
@@ -58,8 +59,11 @@ export const Carousel = ({ server_url }: { server_url: string }) => {
     }
   }, [server_url])
 
-  return (
-    <div className='relative flex-col justify-start items-start bg-transparent rounded-2xl w-full max-h-[66vh]  max-w-370 m-auto overflow-clip' >
+  // return <CarouselSkeleton />
+
+  return isLoading ? <CarouselSkeleton/> :  
+    
+    (<div className='relative flex-col justify-start items-start bg-transparent rounded-2xl w-full max-h-[66vh]  max-w-370 m-auto overflow-clip' >
       <Root initialIndex={0} className='relative flex-col w-full h-full justify-start items-center'>
         <div className="relative flex-col w-full h-full space-y-2 overflow-clip">
           <CarouselContent className="flex justify-start items-start relative w-full max-h-208  [**:object-cover]">
@@ -93,6 +97,5 @@ export const Carousel = ({ server_url }: { server_url: string }) => {
         </div>
         {posts.length > 0 && <CarouselIndicator images={posts.map(post => post.image)} />}
       </Root>
-    </div>
-  );
+    </div>)
 }

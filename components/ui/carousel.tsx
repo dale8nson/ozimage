@@ -210,7 +210,7 @@ function CarouselIndicator({
         className
       )}
     >
-      <div className='relative flex object-cover  md:max-w-370  max-h-[151px]  '>
+      <div className='relative flex object-cover h-full w-full md:max-w-370  max-h-[151px]  '>
         {images.map((img, i) => (
           <div key={i}  className="max-w-[211px] max-h-[151px] overflow-clip  cursor-pointer">
             {img && <NextImage
