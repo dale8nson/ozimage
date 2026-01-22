@@ -94,7 +94,7 @@ export const Posts = ({ serverUrl, className, postsPerPage = 24 }: PostsProps) =
 
   return isInitialLoading ? <PostsSkeleton /> : (
 
-    <div className={`grid justify-center max-w-370 items-start grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-x-1.5 gap-y-1.5 h-fit w-full py-8 m-auto ${className}`}>
+    <div className={`grid justify-center max-w-370  grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-8 h-fit w-full py-8 ${className}`}>
       {loadError && (
         <div className="col-span-full flex justify-center py-10 text-black/60">
           {loadError}

@@ -28,14 +28,11 @@ export default async function Home() {
     <StoreProvider>
       <div className="relative flex-col items-center justify-start w-full h-max">
         <Header />
-        <main className="relative flex-col items-start justify-start space-y-16 w-full h-full overflow-x-clip overflow-y-scroll mx-auto">
+        <main className="relative pt-8 flex-col items-center justify-start space-y-8 w-screen h-full overflow-x-clip overflow-y-scroll mx-auto">
           <div className="relative flex w-full h-auto max-w-370 justify-center items-start mx-auto">
               <Carousel server_url={serverUrl} />
           </div>
-          <Suspense fallback={<div className="relative max-w-370 mx-auto h-auto w-full text-5xl flex-col justify-start items-center text-black animate-pulse "><p>Loading...</p></div>}>
-            <Posts postsPerPage={POSTS_PER_PAGE} serverUrl={serverUrl} className="relative max-w-370 m-auto h-auto w-full z-30 overflow-y-clip" />
-          </Suspense>
-
+            <Posts postsPerPage={POSTS_PER_PAGE} serverUrl={serverUrl} className="relative max-w-370 mx-auto h-auto w-full z-30 overflow-y-clip" />
           {/* <Suspense fallback={<div className="flex justify-center items-center w-full h-full animate-pulse"><p className="text-2xl ">Loading...</p></div>}>
             <div className="w-full h-full flex-col justify-center items-end m-0">
               <Map3D coords={coords} />
