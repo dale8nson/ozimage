@@ -14,6 +14,7 @@ import { HeaderCanvas } from "@/components/HeaderCanvas";
 import { Footer } from "@/components/Footer";
 import { CarouselNavigation } from "@/components/ui/carousel";
 import { CarouselSkeleton } from "@/components/CarouselSkeleton";
+import { TravelAnalytics } from "@/components/TravelAnalytics";
 
 const serverUrl = process.env.SERVER_URL ?? ""
 const POSTS_PER_PAGE = 24
@@ -39,7 +40,7 @@ export default async function Home() {
             </div>
           </Suspense> */}
           <Footer>
-            Footer
+            <TravelAnalytics/>
           </Footer>
         </main>
       </div>

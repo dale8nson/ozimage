@@ -41,3 +41,6 @@ interface MenuItem {
   menu_order: number,
   url: string
 }
+
+
+interface IconProps {className: string }
