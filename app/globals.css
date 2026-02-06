@@ -124,3 +124,8 @@
     @apply bg-background text-foreground;
   }
 }
+
+@font-face {
+  font-family: Klee;
+  src: url(/public/KleeOne-Regular.ttf);
+}

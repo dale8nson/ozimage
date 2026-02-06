@@ -63,7 +63,7 @@ export const Carousel = ({ server_url }: { server_url: string }) => {
 
   return isLoading ? <CarouselSkeleton/> :  
     
-    (<div className='relative flex-col justify-start items-start bg-transparent rounded-2xl w-full max-h-[66vh]  max-w-370 m-auto overflow-clip' >
+    (<div className='relative flex-col drop-shadow-2xl drop-shadow-black/60  justify-start items-start bg-transparent rounded-2xl w-full max-h-[66vh] mb-8  max-w-370 m-auto overflow-clip' >
       <Root initialIndex={0} className='relative flex-col w-full h-full justify-start items-center'>
         <div className="relative flex-col w-full h-full space-y-2 overflow-clip">
           <CarouselContent className="flex justify-start items-start relative w-full max-h-208  [**:object-cover]">
@@ -78,9 +78,14 @@ export const Carousel = ({ server_url }: { server_url: string }) => {
                 // const tp5d = fetch(`${server_url}/tp5d/${post.image.id}`).then(res => res.json()) as Promise<{id: number, fg: string, bg: string}>
                 return (
                   <CarouselItem className="relative flex justify-center items-start w-full max-w-370 h-auto max-h-208" key={i}>
-                    <Link href={post.link} className='block relative flex-col w-full max-h-208'>
-                        <Image width={post.image.width} height={post.image.height} alt={post.image.alt} src={post.image.b64}
-                          className='w-full h-[44vh] grow max-h-184 max-w-370 object-cover' />
+                    <Link href={post.link} className='block relative flex-col w-full max-h-208 bg-blend-hard-light'>
+                  
+                    <Image width={post.image.width} height={post.image.height} alt={post.image.alt} src={post.image.b64}
+                          className='top-0 z-10 w-full h-[44vh] grow max-h-184 max-w-370 object-cover saturate-150'/>
+                    {/* <div className="w-full h-full absolute top-0 bg-[url(/Texturelabs_Film_185M.jpg)] bg-cover mix-blend-plus-lighter contrast-150 opacity-100" /> */}
+                           
+                          
+                          
                       <div className='absolute flex-col w-full items-start bottom-0 p-4 text-white text-2xl sm:text-3xl  md:text-5xl'>
                         <div className="bg-white text-black text-base w-fit font-bold px-2">
                           <p>{Object.keys(post.categories).join(", ")}</p>

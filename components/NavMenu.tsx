@@ -20,12 +20,12 @@ export const NavMenu = ({menuItems}:{menuItems: MenuItem[]}) => {
   const [activeItem, setActiveItem] = useState<string>("home")
 
   return (
-    <NavigationMenu defaultValue="home" value={activeItem} onValueChange={(v) => { setActiveItem(v) }}>
+    <NavigationMenu className="h-fit" defaultValue="home" value={activeItem} onValueChange={(v) => { setActiveItem(v) }}>
     <NavigationMenuList>
       {menuItems.map(item => {
         return (
          <NavigationMenuItem key={item.id} value={item.title.rendered.toLowerCase()}>
-        <NavigationMenuLink asChild active={activeItem == item.title.rendered.toLowerCase()} className="text-[#004071] hover:text-green-500 active:text-green-500 font-bold text-lg ">
+        <NavigationMenuLink asChild active={activeItem == item.title.rendered.toLowerCase()} className="text-[#004071] hover:text-[#E4203E] active:text-text-[#E4203E] font-bold text-lg ">
           <Link href={item.url} >{item.title.rendered}</Link>
         </NavigationMenuLink>
       </NavigationMenuItem> 
