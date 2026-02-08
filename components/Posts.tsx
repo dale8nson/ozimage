@@ -148,7 +148,7 @@ export const Posts = ({
                   <Carousel server_url={serverUrl} />
                   {/* </ParallaxCardEffect> */}
                   <div
-                    className="flex flex-col"
+                    className="flex flex-col translate-y-48"
                     style={{
                       gap: 0
                     }}
@@ -186,13 +186,13 @@ export const Posts = ({
   
                 </div>
                 
-              <ParallaxCardEffect className="w-full h-full"
+              <ParallaxCardEffect className="w-screen h-fit pt-125"
                   id={100}
                   progress={progress}
                   range={[0, 1]}
                   targetScale={1}
                 >
-                  <Footer className="" />
+                  <Footer className="w-screen" />
                 </ParallaxCardEffect>
             </>
           )}

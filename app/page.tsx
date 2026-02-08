@@ -33,7 +33,7 @@ export default async function Home() {
   return (
     <StoreProvider>
       <div className="relative flex-col items-center justify-start w-screen h-screen">
-        <div className="bg-[url(/Texturelabs_Grunge_155M.jpg)] opacity-30 bg-cover  absolute top-0 w-full h-full -z-10"/>
+        <div className="bg-[url(/Texturelabs_Grunge_155M.jpg)] opacity-30 bg-cover absolute top-0 left-0 m-0 w-full h-full -z-10"/>
         <Header />
         <Main POSTS_PER_PAGE={POSTS_PER_PAGE} serverUrl={serverUrl}/>
       </div>

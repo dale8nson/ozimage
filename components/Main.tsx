@@ -17,7 +17,7 @@ export const Main = ({ POSTS_PER_PAGE, serverUrl }: { POSTS_PER_PAGE: number, se
   });
 
 
-  return (<main ref={containerRef} className="fixed pt-8 flex-col items-center justify-start space-y-8 w-full h-full overflow-x-visible overflow-y-scroll mx-auto">
+  return (<main ref={containerRef} className="fixed pt-8 flex-col items-center justify-start space-y-8 w-screen h-[85%] overflow-y-scroll">
 
     {/* <ParallaxCardEffect id={0} progress={scrollYProgress} targetScale={1} range={[0, 1]}  className="relative flex w-full h-auto max-w-370 justify-center items-start mx-auto"> */}
       
@@ -27,7 +27,7 @@ export const Main = ({ POSTS_PER_PAGE, serverUrl }: { POSTS_PER_PAGE: number, se
       scrollY={scrollY}
       postsPerPage={POSTS_PER_PAGE}
       serverUrl={serverUrl}
-      className="relative max-w-370 mx-auto h-full w-full z-30"
+      className="relative max-w-370 h-full w-full z-30 m-auto"
     />
     
     {/* <Suspense fallback={<div className="flex justify-center items-center w-full h-full animate-pulse"><p className="text-2xl ">Loading...</p></div>}>
