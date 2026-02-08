@@ -56,7 +56,7 @@ return (
   ref={rootRef} 
   className={`card h-full w-full mx-0 p-0 relative rounded-2xl hover:z-30 md:h-fit md:max-h-82.25 md:max-w-202 flex-col items-center justify-start duration-350 transition-all md:mx-auto md:pb-8 bg-[#C3AD6F]/50 object-cover overflow-clip ${className}`}>
     <CardContent className="flex-col h-auto w-screen md:w-full md:h-[248.45px] justify-start rounded-t-2xl saturate-125 contrast-125">
-      { image.b64 !== "" && <div className="h-full w-screen md:w-full md:h-[248.45px] "><Link href={link} prefetch><NextImage src={image.b64} width={image.width} height={image.height} alt={image.alt} className="h-min min-w-full md:h-[248.45px] rounded-t-2xl object-cover flex justify-center"  /></Link></div>}
+      { image.b64 !== "" && <div className="h-[248.45px] w-screen md:w-full md:h-[248.45px] "><Link href={link} prefetch><NextImage src={image.b64} width={image.width} height={image.height} alt={image.alt} className="h-min min-w-full md:h-[248.45px] rounded-t-2xl object-cover flex justify-center"  /></Link></div>}
     </CardContent>
     <CardFooter className="absolute bottom-0 my-2 md:my-0 md:relative md:translate-y-0 flex-col self-start items-start justify-start h-fit px-2 md:pl-4">
       {/* <p className="text-white md:text-black italic">{continent}</p> */}

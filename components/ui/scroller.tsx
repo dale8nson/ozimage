@@ -7,6 +7,7 @@ import {
   ChevronLeft,
   ChevronRight,
   ChevronUp,
+  type LucideIcon,
 } from "lucide-react";
 import * as React from "react";
 import { useComposedRefs } from "@/lib/compose-refs";
@@ -291,12 +292,12 @@ const scrollButtonVariants = cva(
   },
 );
 
-const directionToIcon: Record<ScrollDirection, React.ElementType> = {
+const directionToIcon: Record<ScrollDirection, LucideIcon> = {
   up: ChevronUp,
   down: ChevronDown,
   left: ChevronLeft,
   right: ChevronRight,
-} as const;
+};
 
 interface ScrollButtonProps extends React.ComponentProps<"button"> {
   direction: ScrollDirection;

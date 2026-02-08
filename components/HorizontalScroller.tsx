@@ -3,7 +3,7 @@ import { ReactNode } from "react";
  
 export function HorizontalScroller({className, children}:{className: string, children: ReactNode}) {
   return (
-    <Scroller hideScrollbar orientation="horizontal" className={`w-full p-4 ${className}`} asChild>
+    <Scroller hideScrollbar orientation="horizontal" className={`w-full p-4 ${className}`}>
       <div className="flex items-start gap-2.5">
         {children}
       </div>

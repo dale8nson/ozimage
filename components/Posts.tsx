@@ -96,7 +96,7 @@ export const Posts = ({
     }
     if (!serverUrl) {
       setHasMore(false)
-      return <PostsSkeleton />
+      return <PostsSkeleton progress={progress} />
     }
 
     const nextPage = page + 1
@@ -139,7 +139,7 @@ export const Posts = ({
         )}
         <div className="h-full">
           {isInitialLoading ? (
-            <PostsSkeleton />
+            <PostsSkeleton progress={progress}  />
           ) : (
             <>
               
@@ -159,7 +159,7 @@ export const Posts = ({
   
                       return (
                         <ParallaxCardEffect
-                          className="flex-col w-full h-auto max-h-202 max-w-370 rounded-3xl justify-center items-center p-4 shadow-2xl drop-shadow-2xl  bg-[url(/Texturelabs_Paper_159M.jpg)] brightness-110 bg-blend-color-burn overflow-clip"
+                          className="flex-col w-full h-full max-h-202 max-w-370 rounded-3xl justify-center items-center p-4 shadow-2xl drop-shadow-2xl  bg-[url(/Texturelabs_Paper_159M.jpg)] brightness-110 bg-blend-color-burn overflow-clip"
                           id={id}
                           key={continent}
                           progress={progress}
