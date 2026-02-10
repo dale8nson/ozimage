@@ -26,7 +26,7 @@ export const NavMenu = ({menuItems}:{menuItems: MenuItem[]}) => {
         return (
          <NavigationMenuItem key={item.id} value={item.title.rendered.toLowerCase()}>
         <NavigationMenuLink asChild active={activeItem == item.title.rendered.toLowerCase()} className="text-[#004071] hover:text-[#E4203E] active:text-text-[#E4203E] font-bold text-lg ">
-          <Link href={item.url} >{item.title.rendered}</Link>
+          <Link href={item.url} >{item.title.rendered.toUpperCase()}</Link>
         </NavigationMenuLink>
       </NavigationMenuItem> 
         )
