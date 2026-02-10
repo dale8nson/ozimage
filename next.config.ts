@@ -10,6 +10,11 @@ const nextConfig: NextConfig = {
       layers: true,
     };
 
+    config.output.environment = {
+      ...(config.output.environment ?? {}),
+      asyncFunction: true,
+    };
+
     config.module.rules.push({
       test: /\.wasm$/,
       type: "webassembly/async",

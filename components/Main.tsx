@@ -1,17 +1,24 @@
 "use client"
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState, use } from "react"
 import { useScroll } from "motion/react"
 import { Carousel } from "./Carousel"
 import { Footer } from "./Footer"
 import { Posts } from "./Posts"
 import { TravelAnalytics } from "./TravelAnalytics"
 import ParallaxCardEffect from "./parallax-cards/parallax-card-effect"
-import { distance } from "geo-math"
+// import { distance } from "geo-math"
+const distanceFn = import("geo-math")
+
+interface Coord {
+  lat: number,
+  lon: number
+}
 
 
 export const Main = ({ POSTS_PER_PAGE, serverUrl }: { POSTS_PER_PAGE: number, serverUrl: string }) => {
 
-  // const [distance, setDistance] = useState<(c1: {lat: number, lon: number}, c2: {lat: number, lon: number}) => number>()
+  const [distanceKm, setDistanceKm] = useState<number | null>(null)
+  const [distanceError, setDistanceError] = useState<string | null>(null)
 
   // const containerRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null)
@@ -20,14 +27,32 @@ export const Main = ({ POSTS_PER_PAGE, serverUrl }: { POSTS_PER_PAGE: number, se
     container: containerRef
   });
 
+  const { distance }: {distance: (c1: Coord, c2: Coord) => number } = use(distanceFn)
+  console.log(`distance: ${distance({ lat: 0, lon: 5 }, { lat: 25, lon: 30 })}`)
+
   // useEffect(() => {
-  // //   (async () => 
-  // //    {const { distance } = await import("geo-math")
-  // //     setDistance(distance)
-  //     console.log("distance: ", distance({lat: 0, lon: 5}, {lat: 25, lon: 30}))
-  //   // }
-  // //   )()
-    
+  //   console.log("[Main] mounted")
+  //   let mounted = true
+
+  //   ;(async () => {
+  //     console.log("[Main] loading geo-math")
+  //     const { distance } = await import("geo-math")
+  //     if (!mounted) return
+
+  //     const km = distance({ lat: 0, lon: 5 }, { lat: 25, lon: 30 })
+  //     console.log("[Main] distance (km):", km)
+  //     setDistanceKm(km)
+  //   })().catch((error) => {
+  //     if (mounted) {
+  //       setDistanceError(error instanceof Error ? error.message : String(error))
+  //     }
+  //     console.error("Failed to load geo-math wasm module", error)
+  //   })
+
+  //   return () => {
+  //     mounted = false
+  //     console.log("[Main] unmounted")
+  //   }
   // }, [])
   
 
