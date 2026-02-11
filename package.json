@@ -28,7 +28,7 @@
     "clsx": "^2.1.1",
     "draco3d": "^1.5.7",
     "embla-carousel-react": "^8.6.0",
-    "geo-math": "file:../places-ai/geo-math/pkg",
+    "geo-math": "file:./pkg",
     "gsap": "^3.13.0",
     "html-react-parser": "^5.2.8",
     "lenis": "^1.3.17",
