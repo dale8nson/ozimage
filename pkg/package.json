@@ -1,0 +1,17 @@
+{
+  "name": "geo-math",
+  "type": "module",
+  "version": "0.1.0",
+  "files": [
+    "geo_math_bg.wasm",
+    "geo_math.js",
+    "geo_math_bg.js",
+    "geo_math.d.ts"
+  ],
+  "main": "geo_math.js",
+  "types": "geo_math.d.ts",
+  "sideEffects": [
+    "./geo_math.js",
+    "./snippets/*"
+  ]
+}
